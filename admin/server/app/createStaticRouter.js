@@ -75,8 +75,8 @@ module.exports = function createStaticRouter (keystone) {
 	var lessOptions = {
 		render: {
 			modifyVars: {
-				// elementalPath: JSON.stringify(elementalPath),
-				// reactSelectPath: JSON.stringify(reactSelectPath),
+				elementalPath: JSON.stringify(elementalPath),
+				reactSelectPath: JSON.stringify(reactSelectPath),
 				customStylesPath: JSON.stringify(customStylesPath),
 				adminPath: JSON.stringify(keystone.get('admin path')),
 			},
