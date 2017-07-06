@@ -60,30 +60,33 @@ module.exports = function createStaticRouter (keystone) {
 
 	// prebuild static resources on the next tick in keystone dev mode; this
 	// improves first-request performance but delays server start
-	if (process.env.KEYSTONE_DEV === 'true' || process.env.KEYSTONE_PREBUILD_ADMIN === 'true') {
-		bundles.fields.build();
-		bundles.signin.build();
-		bundles.admin.build();
-	}
+	// if (process.env.KEYSTONE_DEV === 'true' || process.env.KEYSTONE_PREBUILD_ADMIN === 'true') {
+	// 	bundles.fields.build();
+	// 	bundles.signin.build();
+	// 	bundles.admin.build();
+	// }
 
 	/* Prepare LESS options */
-	var elementalPath = path.join(path.dirname(require.resolve('elemental')), '..');
-	var reactSelectPath = path.join(path.dirname(require.resolve('react-select')), '..');
-	var customStylesPath = keystone.getPath('adminui custom styles') || '';
+	// console.log(require.resolve('react-select'));
+	// var elementalPath = path.join(path.dirname(require.resolve('elemental')), '..');
+	// var reactSelectPath = path.join(path.dirname(require.resolve('react-select')), '..');
+	// var customStylesPath = keystone.getPath('adminui custom styles') || '';
 
-	var lessOptions = {
-		render: {
-			modifyVars: {
-				elementalPath: JSON.stringify(elementalPath),
-				reactSelectPath: JSON.stringify(reactSelectPath),
-				customStylesPath: JSON.stringify(customStylesPath),
-				adminPath: JSON.stringify(keystone.get('admin path')),
-			},
-		},
-	};
+	// var lessOptions = {
+	// 	render: {
+	// 		modifyVars: {
+	// 			// elementalPath: JSON.stringify(elementalPath),
+	// 			// reactSelectPath: JSON.stringify(reactSelectPath),
+	// 			customStylesPath: JSON.stringify(customStylesPath),
+	// 			adminPath: JSON.stringify(keystone.get('admin path')),
+	// 		},
+	// 	},
+	// };
 
 	/* Configure router */
-	router.use('/styles', less(path.resolve(__dirname + '/../../public/styles'), lessOptions));
+	// router.use('/styles', less(path.resolve(__dirname + '/../../public/styles'), lessOptions));
+	// router.use('/styles', less(path.resolve(__dirname + '/../../public/styles')));
+	// router.use('/styles/keystone.min.css');
 	router.use('/styles/fonts', express.static(path.resolve(__dirname + '/../../public/js/lib/tinymce/skins/keystone/fonts')));
 	router.get('/js/fields.js', bundles.fields.serve);
 	router.get('/js/signin.js', bundles.signin.serve);
