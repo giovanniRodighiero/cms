@@ -1,7 +1,7 @@
 const babelify = require('babelify');
 const browserify = require('browserify-middleware');
 const express = require('express');
-const less = require('less-middleware');
+// const less = require('less-middleware');
 const path = require('path');
 
 const packages = require('../../admin/client/packages');
@@ -31,7 +31,7 @@ const lessOptions = {
 		},
 	},
 };
-app.use('/styles', less(path.resolve('./admin/public/styles'), lessOptions));
+// app.use('/styles', less(path.resolve('./admin/public/styles'), lessOptions));
 app.use('/styles/fonts', express.static(
 	path.resolve('./admin/public/js/lib/tinymce/skins/keystone/fonts')
 ));
