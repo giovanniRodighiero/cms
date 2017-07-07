@@ -85,12 +85,12 @@ module.exports = function createStaticRouter (keystone) {
 
 	/* Configure router */
 	// router.use('/styles', less(path.resolve(__dirname + '/../../public/styles'), lessOptions));
+	router.use(express.static(path.resolve(__dirname + '/../../public')));
 	router.use('/styles/keystone.min.css', express.static(path.resolve(__dirname + '/../../public/styles/keystone.min.css')))
 	router.use('/styles/fonts', express.static(path.resolve(__dirname + '/../../public/js/lib/tinymce/skins/keystone/fonts')));
 	// router.get('/js/fields.js', path.resolve(__dirname + '/../bundles/js/d5942a-FieldTypes.js'));
 	// router.get('/js/signin.js', path.resolve(__dirname + '/../bundles/js/d5942a-Signin/index.js'));
 	// router.get('/js/admin.js', path.resolve(__dirname + '/../bundles/js/d5942a-App/index.js'));
-	router.use(express.static(path.resolve(__dirname + '/../../public')));
 	router.use('/js/signin.js', express.static(path.resolve(__dirname + '/../../bundles/js/Signin.js')));
 	router.use('/js/fields.js', express.static(path.resolve(__dirname + '/../../bundles/js/FieldTypes.js')));
 	router.use('/js/admin.js', express.static(path.resolve(__dirname + '/../../bundles/js/Admin.js')));
