@@ -38,58 +38,62 @@ module.exports = function createStaticRouter (keystone) {
 	var router = express.Router();
 
 	/* Prepare browserify bundles */
-	var bundles = {
-		fields: browserify({
-			stream: buildFieldTypesStream(keystone.fieldTypes),
-			expose: 'FieldTypes',
-			file: './FieldTypes.js',
-			hash: keystoneHash,
-			writeToDisk: writeToDisk,
-		}),
-		signin: browserify({
-			file: './Signin/index.js',
-			hash: keystoneHash,
-			writeToDisk: writeToDisk,
-		}),
-		admin: browserify({
-			file: './App/index.js',
-			hash: keystoneHash,
-			writeToDisk: writeToDisk,
-		}),
-	};
+	// var bundles = {
+	// 	fields: browserify({
+	// 		stream: buildFieldTypesStream(keystone.fieldTypes),
+	// 		expose: 'FieldTypes',
+	// 		file: './FieldTypes.js',
+	// 		hash: keystoneHash,
+	// 		writeToDisk: writeToDisk,
+	// 	}),
+	// 	signin: browserify({
+	// 		file: './Signin/index.js',
+	// 		hash: keystoneHash,
+	// 		writeToDisk: writeToDisk,
+	// 	}),
+	// 	admin: browserify({
+	// 		file: './App/index.js',
+	// 		hash: keystoneHash,
+	// 		writeToDisk: writeToDisk,
+	// 	}),
+	// };
 
 	// prebuild static resources on the next tick in keystone dev mode; this
 	// improves first-request performance but delays server start
-	if (process.env.KEYSTONE_DEV === 'true' || process.env.KEYSTONE_PREBUILD_ADMIN === 'true') {
-		bundles.fields.build();
-		bundles.signin.build();
-		bundles.admin.build();
-	}
+	// if (process.env.KEYSTONE_DEV === 'true' || process.env.KEYSTONE_PREBUILD_ADMIN === 'true') {
+	// 	bundles.fields.build();
+	// 	bundles.signin.build();
+	// 	bundles.admin.build();
+	// }
 
 	/* Prepare LESS options */
 	// console.log(require.resolve('react-select'));
-	var elementalPath = path.join(path.dirname(require.resolve('elemental')), '..');
-	var reactSelectPath = path.join(path.dirname(require.resolve('react-select')), '..');
-	var customStylesPath = keystone.getPath('adminui custom styles') || '';
+	// var elementalPath = path.join(path.dirname(require.resolve('elemental')), '..');
+	// var reactSelectPath = path.join(path.dirname(require.resolve('react-select')), '..');
+	// var customStylesPath = keystone.getPath('adminui custom styles') || '';
 
 	var lessOptions = {
 		render: {
 			modifyVars: {
-				elementalPath: JSON.stringify(elementalPath),
-				reactSelectPath: JSON.stringify(reactSelectPath),
-				customStylesPath: JSON.stringify(customStylesPath),
+				// elementalPath: JSON.stringify(elementalPath),
+				// reactSelectPath: JSON.stringify(reactSelectPath),
+				// customStylesPath: JSON.stringify(customStylesPath),
 				adminPath: JSON.stringify(keystone.get('admin path')),
 			},
 		},
 	};
 
 	/* Configure router */
-	router.use('/styles', less(path.resolve(__dirname + '/../../public/styles'), lessOptions));
+	// router.use('/styles', less(path.resolve(__dirname + '/../../public/styles'), lessOptions));
+	router.use('/styles/keystone.min.css', express.static(path.resolve(__dirname + '/../../public/styles/keystone.min.css')))
 	router.use('/styles/fonts', express.static(path.resolve(__dirname + '/../../public/js/lib/tinymce/skins/keystone/fonts')));
-	router.get('/js/fields.js', bundles.fields.serve);
-	router.get('/js/signin.js', bundles.signin.serve);
-	router.get('/js/admin.js', bundles.admin.serve);
+	// router.get('/js/fields.js', path.resolve(__dirname + '/../bundles/js/d5942a-FieldTypes.js'));
+	// router.get('/js/signin.js', path.resolve(__dirname + '/../bundles/js/d5942a-Signin/index.js'));
+	// router.get('/js/admin.js', path.resolve(__dirname + '/../bundles/js/d5942a-App/index.js'));
 	router.use(express.static(path.resolve(__dirname + '/../../public')));
+	router.use('/js/signin.js', express.static(path.resolve(__dirname + '/../../bundles/js/Signin.js')));
+	router.use('/js/fields.js', express.static(path.resolve(__dirname + '/../../bundles/js/FieldTypes.js')));
+	router.use('/js/admin.js', express.static(path.resolve(__dirname + '/../../bundles/js/Admin.js')));
 
 	return router;
 };
