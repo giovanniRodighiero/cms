@@ -93,7 +93,7 @@ module.exports = function createStaticRouter (keystone) {
 	// router.get('/js/admin.js', path.resolve(__dirname + '/../bundles/js/d5942a-App/index.js'));
 	router.use('/js/signin.js', express.static(path.resolve(__dirname + '/../../bundles/js/Signin.js')));
 	router.use('/js/fields.js', express.static(path.resolve(__dirname + '/../../bundles/js/FieldTypes.js')));
-	router.use('/js/admin.js', express.static(path.resolve(__dirname + '/../../bundles/js/Admin.js')));
+	router.use('/js/admin.js', express.static(path.resolve(__dirname + '/../../bundles/js/App.js')));
 
 	return router;
 };
